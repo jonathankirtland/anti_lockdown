@@ -12,12 +12,18 @@ int main()
     std::wstring hookDll = L"DLL.dll";
     std::wstring targetExe = L"C:\\Program Files (x86)\\Respondus\\LockDown Browser\\LockDownBrowser.exe";
     std::wstring commandLine = L"cmd";
+
+    //tell the user f2 for shrink and f3 for expand
+    std::cout << "Press F2 to shrink the window and F3 to expand the window, press enter to continue...\n";
+    getchar();
     
     
     bool iscreated = false;
 
     HANDLE hProcess = NULL;
     PROCESS_INFORMATION pi = { 0 };
+
+
 
     hProcess = create_new_process(targetExe, commandLine, pi, CREATE_SUSPENDED | CREATE_NEW_CONSOLE);
     if (!hProcess) {

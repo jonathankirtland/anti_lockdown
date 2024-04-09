@@ -45,7 +45,7 @@ bool inject(HANDLE hProcess, const wchar_t* inject_path)
 
 	LPVOID remote_buffer = write_into_process(hProcess, (LPBYTE)inject_path, inject_path_size, PAGE_READWRITE);
 	if (!remote_buffer) return false;
-	std::cout << "Remote buffer: " << remote_buffer << std::endl;
+	std::cout << "[*] Remote buffer: " << remote_buffer << std::endl;
 
 	DWORD ret = WAIT_FAILED;
 	std::cout << "[*] Creating remote thread\n";
@@ -142,4 +142,37 @@ bool inject_into_process(DWORD pid, const wchar_t* inject_path)
 	bool ret = inject(hProcess, inject_path);
 	CloseHandle(hProcess);
 	return ret;
+}
+
+DWORD findMyProc(const WCHAR* procname) {
+
+	HANDLE hSnapshot;
+	PROCESSENTRY32 pe;
+	int pid = 0;
+	BOOL hResult;
+
+	// snapshot of all processes in the system
+	hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	if (INVALID_HANDLE_VALUE == hSnapshot) return 0;
+
+	// initializing size: needed for using Process32First
+	pe.dwSize = sizeof(PROCESSENTRY32);
+
+	// info about first process encountered in a system snapshot
+	hResult = Process32First(hSnapshot, &pe);
+
+	// retrieve information about the processes
+	// and exit if unsuccessful
+	while (hResult) {
+		// if we find the process: return process ID
+		if (wcscmp(procname, pe.szExeFile) == 0) {
+			pid = pe.th32ProcessID;
+			break;
+		}
+		hResult = Process32Next(hSnapshot, &pe);
+	}
+
+	// closes an open handle (CreateToolhelp32Snapshot)
+	CloseHandle(hSnapshot);
+	return DWORD(pid);
 }
