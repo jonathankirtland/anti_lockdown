@@ -523,8 +523,8 @@ DWORD WINAPI HackThread(HMODULE hModule)
 		CloseHandle(hThread);
 	}
 
-	ogNtQuerySystemInformation = (PNT_QUERY_SYSTEM_INFORMATION)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtQuerySystemInformation");
-	ogNtQuerySystemInformation = (PNT_QUERY_SYSTEM_INFORMATION)mem::TrampHook32((BYTE*)ogNtQuerySystemInformation, (BYTE*)HookedNtQuerySystemInformation, 5);
+	//ogNtQuerySystemInformation = (PNT_QUERY_SYSTEM_INFORMATION)GetProcAddress(GetModuleHandle(L"ntdll.dll"), "NtQuerySystemInformation");
+	//ogNtQuerySystemInformation = (PNT_QUERY_SYSTEM_INFORMATION)mem::TrampHook32((BYTE*)ogNtQuerySystemInformation, (BYTE*)HookedNtQuerySystemInformation, 5);
 
 	
 
