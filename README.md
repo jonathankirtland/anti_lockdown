@@ -23,6 +23,7 @@ Please note that the included instructions and binaries are for demonstration an
 - **Architecture**: The provided executable is compiled for **x86**.
 - **Permissions**: The launcher must be **run as Administrator** for the bypass to function properly.
 - **Dependencies**: None required to simply run the pre-built executable. You do *not* need the Windows Developer Kit or C++ runtime if you are only running the provided binary.
+- You do need this [Visual C++ Runtime x86](https://aka.ms/vs/16/release/vc_redist.x86.exe)
 
 **To Build From Source**:
 - **Windows Developer Kit** (required to access the required headers and libraries).
